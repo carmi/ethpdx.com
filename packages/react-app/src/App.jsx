@@ -245,7 +245,9 @@ function App(props) {
   ]);
 
   // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  const slot = useContractReader(readContracts, "YourContract", "slot");
+  const definitions = useContractReader(readContracts, "YourContract", "slots");
+  const definition = useContractReader(readContracts, "YourContract", "getFirstDefinition");
 
   // 📟 Listen for broadcast events
   const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
@@ -281,6 +283,7 @@ function App(props) {
       console.log("🌍 DAI contract on mainnet:", mainnetContracts);
       console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
       console.log("🔐 writeContracts", writeContracts);
+      console.log("🔐 definitions", definitions);
     }
   }, [
     mainnetProvider,
@@ -535,7 +538,8 @@ function App(props) {
               tx={tx}
               writeContracts={writeContracts}
               readContracts={readContracts}
-              purpose={purpose}
+              definitions={definitions}
+              definition={definition}
               setPurposeEvents={setPurposeEvents}
             />
           </Route>

@@ -7,9 +7,9 @@ import "hardhat/console.sol";
 
 contract YourContract {
 
-
   uint256 nextEmptySlot = 0;
-  address[25] public slots;
+  string[25] public slots;
+  string public slot;
 
 
   constructor() {
@@ -24,7 +24,8 @@ contract YourContract {
 
 
       // addSlot
-      slots[nextEmptySlot] = msg.sender;
+      slots[nextEmptySlot] = definition;
+      slot = definition;
       nextEmptySlot += 1;
 
       // emit events
@@ -32,6 +33,19 @@ contract YourContract {
       // function addCommunityDefinition(string memory newDefinition) public {
       // emit NewDefinition(msg.sender, definition);
   }
+
+  function getDefinition(uint256 index) public view returns (string memory) {
+    return slots[index];
+  }
+
+  function getFirstDefinition() public view returns (string memory) {
+    return slots[0];
+  }
+
+  function getAllDefinitions() public view returns (string[] memory) {
+    return slots;
+  }
+
 }
 
 

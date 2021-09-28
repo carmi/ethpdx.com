@@ -6,6 +6,8 @@ import { Address, Balance } from "../components";
 
 export default function ExampleUI({
   purpose,
+  definitions,
+  definition,
   setPurposeEvents,
   address,
   mainnetProvider,
@@ -16,7 +18,7 @@ export default function ExampleUI({
   readContracts,
   writeContracts,
 }) {
-  const [newPurpose, setNewPurpose] = useState("loading...");
+  const [newDefinition, addDefinition] = useState("loading...");
 
   return (
     <div>
@@ -24,13 +26,15 @@ export default function ExampleUI({
         ⚙️ Here is an example UI that displays and sets the purpose in your smart contract:
       */}
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
-        <h2>Example UI:</h2>
-        <h4>purpose: {purpose}</h4>
+        <h2>EthPDX is a community of:</h2>
+        <h4>defs: {definitions}</h4>
+        <h4>def: {definition}</h4>
+
         <Divider />
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
-              setNewPurpose(e.target.value);
+              addDefinition(e.target.value);
             }}
           />
           <Button
@@ -38,7 +42,7 @@ export default function ExampleUI({
             onClick={async () => {
               /* look how you call setPurpose on your contract: */
               /* notice how you pass a call back for tx updates too */
-              const result = tx(writeContracts.YourContract.setPurpose(newPurpose), update => {
+              const result = tx(writeContracts.YourContract.addCommunityDefinition(newDefinition), update => {
                 console.log("📡 Transaction Update:", update);
                 if (update && (update.status === "confirmed" || update.status === 1)) {
                   console.log(" 🍾 Transaction " + update.hash + " finished!");
@@ -57,7 +61,7 @@ export default function ExampleUI({
               console.log(await result);
             }}
           >
-            Set Purpose!
+            Set Definition!
           </Button>
         </div>
         <Divider />
@@ -93,10 +97,10 @@ export default function ExampleUI({
           <Button
             onClick={() => {
               /* look how you call setPurpose on your contract: */
-              tx(writeContracts.YourContract.setPurpose("🍻 Cheers"));
+              tx(writeContracts.YourContract.addCommunityDefinition("🍻 Add Definition"));
             }}
           >
-            Set Purpose to &quot;🍻 Cheers&quot;
+            Set Definition to &quot;🍻 Cheers&quot;
           </Button>
         </div>
         <div style={{ margin: 8 }}>
